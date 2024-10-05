@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -11,12 +10,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to bottom, #001f3f, #b03060);
+            background: linear-gradient(to bottom, #001f3f, #b03060); /* Темно-синій до темно-червоного */
             color: white;
             font-size: 2em;
             text-align: center;
             transition: background 0.5s;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         .emoji {
@@ -37,12 +36,14 @@
         }
 
         #heart {
-            display: none; 
+            display: none; /* Ховаємо серце спочатку */
             font-size: 48px;
             position: absolute;
-            bottom: 20%; 
+            bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
         }
 
         @keyframes moveCat {
@@ -66,9 +67,11 @@
 </head>
 <body>
     <div id="text">Просто натискай на екран 🤍</div>
+
+    <!-- Кіт та серця -->
     <div id="cat" class="emoji">🐈‍⬛🤍🐈‍⬛🤍🐈‍⬛🤍</div>
     <div id="hearts" class="emoji">🤍🐈‍⬛🤍🐈‍⬛🤍🐈‍⬛</div>
-    <div id="heart" class="emoji">❤️</div>
+    <div id="heart" class="emoji">❤️</div> <!-- Червоне серце -->
 
     <script>
         const texts = [
@@ -165,14 +168,21 @@
                 "Просто дякую тобі, що ти є, що ти справжній, і що терпиш мене , я це ціную, скучаю за тобою сонечко" ,
                 "Сподіваюсь що скоро зможу сказати то все дивлячись на тебе)" ,
                 "З теплими почуттями, Покахонтас🤍 " ,
-          ];
+        ];
 
         let index = 0;
+        const textElement = document.getElementById('text');
+        const heartElement = document.getElementById('heart');
 
-        document.body.addEventListener("click", () => {
-            const textElement = document.getElementById("text");
-            textElement.innerText = texts[index];
-            index = (index + 1) % texts.length;
+        document.addEventListener('click', () => {
+            if (index < texts.length) {
+                textElement.innerText = texts[index];
+                index++;
+            } else {
+                textElement.innerText = ""; // Сховати текст
+                heartElement.style.display = 'block'; // Показати серце
+                heartElement.style.opacity = 1; // Анімація серця
+            }
         });
     </script>
 </body>
